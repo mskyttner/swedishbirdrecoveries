@@ -1,32 +1,44 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-swedishbirdrecoveries
-=====================
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# swedishbirdrecoveries
 
 [![Travis-CI Build Status](https://travis-ci.org/mskyttner/swedishbirdrecoveries.svg?branch=master)](https://travis-ci.org/mskyttner/swedishbirdrecoveries)
 
+[![AGPLv3 License](http://img.shields.io/badge/license-AGPLv3-blue.svg)](LICENSE)
+
 The Swedish Museum for Natural History manages bird ringing data in Sweden. This R package - `swedishbirdrecoveries` - provides a programmatic interface to Swedish Bird Recovery data.
 
-Functionality and Stakeholders
-------------------------------
+## Functionality and Stakeholders
 
-Stakeholders and their needs:
+Stakeholders and their needs: 
 
 ### Museum Staff (Ringmärkningscentralen)
 
-Needs to manage the data internally and externally.
+Needs to manage the data internally and externally. 
 
 Can participate in the process and develop the package further. Can control which data is made public and update frequency. Can also use the package to work with internal data in the same format.
 
 ### Research Community
 
-Needs access to the data for scientific use.
+Needs access to the data for scientific use. 
 
 Can install and use an R-package with datasets and visuals (see installation instructions below).
 
 ### Citizens / General Public
 
-Needs web-friendly way to look at the data.
+Needs web-friendly way to look at the data. 
 
 Can use a web user interface to explore the data with no installation required, by browsing to a server which has deloyed this package.
 
@@ -38,12 +50,11 @@ Needs to aggregate and disseminate the data internationally and nationally.
 
 Can be achieved by ensuring that data can flow to GBIF via DINA-Web for international and national use, which will enable that data can be made available at nrm.se/psi-data, in line with the Museum's mission and regulations.
 
-Installation
-------------
+## Installation
 
-You can get started by installing from Github:
+You can get started by installing from Github: 
 
-``` r
+```r
 install.packages("devtools")
 devtools::install_github("mskyttner/swedishbirdrecoveries")
 
@@ -51,18 +62,17 @@ devtools::install_github("mskyttner/swedishbirdrecoveries")
 library(swedishbirdrecoveries)
 ```
 
-Usage
------
+## Usage
 
 The data include several dimensions:
 
--   Species
--   Ringing date
--   Ringing position
--   Ringing age category
--   Sex
--   Recovery date
--   Recovery position
+- Species
+- Ringing date
+- Ringing position
+- Ringing age category
+- Sex
+- Recovery date
+- Recovery position
 
 ### Searches
 
@@ -84,10 +94,9 @@ Given recoveries per species, what would a kernel look like?
 
 ### Potential other searches
 
-TODO: write section here
+  TODO: write section here
+  
+## Meta
 
-Meta
-----
-
--   Please [report any requests, issues or bugs](https://github.com/mskyttner/swedishbirdrecoveries/issues).
--   License: Affero GPL v3
+* Please [report any requests, issues or bugs](https://github.com/mskyttner/swedishbirdrecoveries/issues).
+* License: Affero GPL v3
