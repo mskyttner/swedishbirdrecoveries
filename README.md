@@ -3,7 +3,7 @@
 swedishbirdrecoveries
 =====================
 
-[![Travis-CI Build Status](https://travis-ci.org/mskyttner/swedishbirdrecoveries.svg?branch=master)](https://travis-ci.org/mskyttner/swedishbirdrecoveries)
+[![Travis-CI Build Status](https://travis-ci.org/mskyttner/swedishbirdrecoveries.svg?branch=master)](https://travis-ci.org/mskyttner/swedishbirdrecoveries)[![AGPLv3 License](http://img.shields.io/badge/license-AGPLv3-blue.svg)](LICENSE)
 
 The Swedish Museum for Natural History manages bird ringing data in Sweden. This R package - `swedishbirdrecoveries` - provides a programmatic interface to Swedish Bird Recovery data.
 

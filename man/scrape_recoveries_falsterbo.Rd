@@ -7,7 +7,7 @@
 scrape_recoveries_falsterbo(species = "ACNIS")
 }
 \arguments{
-\item{sciname}{the scientific name for a bird species}
+\item{species}{the scientific name for a bird species}
 }
 \value{
 a data frame with recovery data

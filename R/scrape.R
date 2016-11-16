@@ -1,5 +1,5 @@
 #' Retrieve bird recovery data from Falsterbo Fågelstation
-#' @param sciname the scientific name for a bird species
+#' @param species the scientific name for a bird species
 #' @return a data frame with recovery data
 #' @import dplyr
 #' @importFrom xml2 read_xml xml_children xml_attrs
@@ -123,7 +123,7 @@ scrape_recoveries_ottenby <- function() {
     query = list(
       lage = "enk",
       art = "",
-      urvalsubmit = "Gör+urval"
+      urvalsubmit = "G\u00f6r+urval"
     ))
 
   html <-
@@ -145,8 +145,8 @@ scrape_recoveries_ottenby <- function() {
     re <- ".*infodivtxt\\.innerHTML = \"(.*?)\".*"
     html <- gsub(re, "\\1", js)
     txt <- read_html(html) %>% html_text()
-    re <- paste0("Typ:(.*?)Art:(.*?)Omständigheter:(.*?)",
-      "Märkdatum:(.*?)Fynddatum:(.*)")
+    re <- paste0("Typ:(.*?)Art:(.*?)Omst\u00e4ndigheter:(.*?)",
+      "M\u00e4rkdatum:(.*?)Fynddatum:(.*)")
     df <- data_frame(cat = gsub(re, "\\1", txt),
       species = gsub(re, "\\2", txt),
       context = gsub(re, "\\3", txt),
