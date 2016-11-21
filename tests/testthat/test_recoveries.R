@@ -2,7 +2,8 @@ library(swedishbirdrecoveries)
 context("Dataset content")
 
 test_that("datasets are not empty", {
-  expect_gt(nrow(birdrecoveries), 0)
+  expect_gt(nrow(birdrecoveries_eng), 0)
+	expect_gt(nrow(birdrecoveries_swe), 0)
 })
 
 test_that("scrape returns data - checklists", {
