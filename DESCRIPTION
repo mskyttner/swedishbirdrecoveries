@@ -1,7 +1,7 @@
 Package: swedishbirdrecoveries
 Type: Package
 Title: Swedish Bird Recoveries (Data and User Interface)
-Version: 0.1.0
+Version: 0.1.1
 Author: Markus Skyttner <markus.skyttner@nrm.se>
 Maintainer: Markus Skyttner <markus.skyttner@nrm.se>
 Authors@R: person("Markus", "Skyttner", role = c("cre", "aut"), email = "markus.skyttner@nrm.se")

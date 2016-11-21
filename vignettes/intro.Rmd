@@ -18,7 +18,7 @@ library(swedishbirdrecoveries)
 
 # use just 100 or so points here
 birds <- 
-  birdrecoveries[1:100, ] %>%
+  birdrecoveries_eng[1:100, ] %>%
   dplyr::rename(longitude = ringing_lon,
          latitude = ringing_lat)
 

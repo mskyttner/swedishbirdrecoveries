@@ -31,9 +31,10 @@ suppressPackageStartupMessages(library(swedishbirdrecoveries))
 # display data for the first ten rows and select three columns
 library(dplyr)
 
+birdrecoveries <- birdrecoveries_eng
 df <- birdrecoveries %>% 
   arrange(desc(recovery_date)) %>%
-  select(sciname, recovery_date, recovery_det) %>%
+  select(sciname, recovery_date, recovery_details) %>%
   head(10)
 
 knitr::kable(df)
@@ -46,7 +47,7 @@ The available columns in the data provide dimensions that cover many of the 5W q
 - WHAT - taxonomy (name, sciname) including gender/sex (ringing_sex_code, ringing_sex, recovery_sex_code, recovery_sex)
 - WHEN - temporal/age/duration (ringing_age_code, ringing_age, ringing_date, etc)
 - WHERE - location/accurary - numerical and categorical (ringing_lot, ringing_lon, recovery_lat, recovery_lon, ringing_country, ringing_province, recovery_majorregion, recovery_minorregion, ringing_accu2 etc)
-- WHY/HOW - recovery event data (distance, direction, days, hours, recovery_code, recovery_det)
+- WHY/HOW - recovery event data (distance, direction, days, hours, recovery_code, recovery_details)
 
 The help functions provide detailed metadata information for the bundled datasets. For example, you can get more details in the help for the `birdrecoveries_eng` dataset, which contains the following columns:
 
@@ -73,13 +74,14 @@ library(pander)
 #  source = "GBIF Backbone Taxonomy", 
 #  config = progress())
 
-species <- birdrecoveries %>% select(sciname) %>% unique %>% .$sciname
-first_row <- function(x) eol_search(x) %>% head(1)
-res <- purrr::map_df(species, first_row)
-pages <- paste0("[", res$name, "](http://eol.org/pages/", res$pageid, ")\n")
-out <- data_frame(sciname = species, eol = pages)
 
-pander(out)
+species <- birdrecoveries %>% select(sciname) %>% unique %>% .$sciname
+# first_row <- function(x) eol_search(x) %>% head(1)
+# res <- purrr::map_df(species, first_row)
+# pages <- paste0("[", res$name, "](http://eol.org/pages/", res$pageid, ")\n")
+# out <- data_frame(sciname = species, eol = pages)
+# 
+# pander(out)
 
 ```
 

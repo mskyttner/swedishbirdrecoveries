@@ -3,49 +3,50 @@
 \docType{data}
 \name{birdrecoveries_eng}
 \alias{birdrecoveries_eng}
-\title{Dataset birdrecoveries in English}
-\format{A data frame [3795 x 30]
+\title{Dataset birdrecoveries_eng}
+\format{A data frame [166262 x 31]
 \describe{
-  \item{name}{}
-  \item{sciname}{}
-  \item{ringing_sex_code}{}
-  \item{ringing_sex}{}
-  \item{ringing_age_code}{}
-  \item{ringing_age}{}
-  \item{ringing_date}{}
-  \item{ringing_lat}{}
-  \item{ringing_lon}{}
-  \item{ringing_country}{}
-  \item{ringing_province}{}
-  \item{ringing_majorregion}{}
-  \item{ringing_minorregion}{}
-  \item{ringing_accu2}{}
-  \item{recovery_date}{}
-  \item{recovery_accu_code}{}
-  \item{recovery_accu}{}
-  \item{recovery_lat}{}
-  \item{recovery_lon}{}
-  \item{recovery_accu2}{}
-  \item{recovery_country}{}
-  \item{recovery_province}{}
-  \item{recovery_majorregion}{}
-  \item{recovery_minorregion}{}
-  \item{distance}{}
-  \item{direction}{}
-  \item{days}{}
-  \item{hours}{}
-  \item{recovery_code}{}
-  \item{recovery_det}{}
+  \item{name}{Vernacular}
+  \item{sciname}{Scientific Name}
+  \item{ringing_sex_code}{Bird Sex Code}
+  \item{ringing_sex}{Sex}
+  \item{ringing_age_code}{Age Code}
+  \item{ringing_age}{Age}
+  \item{ringing_date}{Ringing Date}
+  \item{ringing_lat}{Ringing Latitude}
+  \item{ringing_lon}{Ringing Longitude}
+  \item{ringing_country}{Ringing Country}
+  \item{ringing_province}{Ringing Province}
+  \item{ringing_majorregion}{Ringing Major Region}
+  \item{ringing_minorregion}{Ringing Minor Region}
+  \item{recovery_type}{Recovery Type}
+  \item{recovery_date}{Recovery Date}
+  \item{recovery_date_accu_code}{Recovery Date Accuracy Code}
+  \item{recovery_date_accu}{Recovery Date Accuracy}
+  \item{recovery_lat}{Recovery Latitude}
+  \item{recovery_lon}{Recovery Longitude}
+  \item{recovery_coord_accu}{Recovery Location Accuracy}
+  \item{recovery_country}{Recovery Country}
+  \item{recovery_province}{Recovery Province}
+  \item{recovery_majorregion}{Recovery Major Region}
+  \item{recovery_minorregion}{Recovery Minor Region}
+  \item{distance}{Distance}
+  \item{direction}{Direction}
+  \item{days}{Days Since Ringing}
+  \item{hours}{Hours}
+  \item{recovery_code}{Recovery Code}
+  \item{recovery_details}{Recovery Details}
+  \item{source}{Source}
   ...
   }}
 \source{
-\url{http://}
+\url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
 }
 \usage{
 birdrecoveries_eng
 }
 \description{
-Date: Sun Nov 13 13:39:55 2016
+Date: Mon Nov 21 10:18:08 2016
 }
 \keyword{datasets}
 

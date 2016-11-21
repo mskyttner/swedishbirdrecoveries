@@ -1,22 +1,155 @@
 shinyServer(function(input, output) {
 
+  #sex <- birds %>% distinct(ringing_sex) %>% .$ringing_sex
+  #age <- birds %>% distinct(ringing_age) %>% .$ringing_age
+  #code <- birds %>% distinct(recovery_code) %>% .$recovery_code
+  cmin <- function(x) floor(min(x, na.rm = TRUE))
+  cmax <- function(x) ceiling(max(x, na.rm = TRUE))
+
   df <- reactive({
-    df <- birdrecoveries
-
-    if (length(input$name) > 0)
-      df <- df %>% filter(name %in% input$name)
-
-    return (df)
+    df <- birds()
+    if (length(input$species) > 0)
+      df <- df %>% filter(name %in% input$species)
+    if (length(input$source) > 0)
+      df <- df %>% filter(source %in% input$source)
+    if (length(input$lats) > 0)
+      df <- df %>% filter(recovery_lat >= input$lats[1],
+                          recovery_lat <= input$lats[2])
+    if (length(input$lons) > 0)
+      df <- df %>% filter(recovery_lon >= input$lons[1],
+                          recovery_lon <= input$lons[2])
+    if (length(input$country) > 0)
+      df <- df %>% filter(recovery_country %in% input$country)
+    return (df %>% head(4000))
   })
 
+  lang <- reactive({
+  	if (length(input$lang) > 0) {
+  		if (input$lang == "Svenska") return ("swe")
+  		if (input$lang == "English") return ("eng")
+  	}
+  	return ("eng")
+	})
+
+  birds <- reactive({
+  		get(paste0("birdrecoveries_", lang()))
+  })
+
+  output$lang <- renderUI({
+  	radioButtons(inputId = "lang", inline = TRUE,
+		 label = "",
+		 choices = c("English", "Svenska"), selected = "English")
+  })
+
+  output$species <- renderUI({
+    species <- birds() %>% distinct(name) %>% .$name
+    sciname <- birds() %>% distinct(sciname) %>% .$sciname
+    if (is.null(species)) return()
+    selectizeInput("species", label = i18n("name", lang()),
+      choices = species, selected = species[1],
+      multiple = TRUE,
+      options = list(maxItems = 20)#,
+    )
+  })
+
+  output$source <- renderUI({
+    source <- birds() %>% distinct(source) %>% .$source
+    if (is.null(source)) return()
+    selectizeInput("source", label = i18n("source", lang()),
+      choices = source, multiple = TRUE,
+      options = list(maxItems = 20)#,
+    )
+  })
+
+  output$country <- renderUI({
+    country <- birds() %>% distinct(recovery_country) %>% .$recovery_country
+    if (is.null(country)) return()
+    selectizeInput("country", label = i18n("recovery_country", lang()),
+      choices = country, multiple = TRUE,
+      options = list(maxItems = 20)#,
+    )
+
+  })
+
+  output$lats <- renderUI({
+    lat_min <- cmin(birds()$recovery_lat)
+    lat_max <- cmax(birds()$recovery_lat)
+    sliderInput("lats", i18n("recovery_lat", lang()), lat_min, lat_max,
+                value = c(lat_min, lat_max), step = 1)
+  })
+
+  output$lons <- renderUI({
+    lon_min <- cmin(birds()$recovery_lon)
+    lon_max <- cmax(birds()$recovery_lon)
+    sliderInput("lons", i18n("recovery_lon", lang()), lon_min, lon_max,
+                value = c(lon_min, lon_max), step = 1)
+  })
+
+  output$birdmap <- renderLeaflet({
+    out <- df()
+    popup_content <- #htmltools::htmlEscape(
+      paste(sep = "",
+      "<b>", i18n("name", lang()), ":</b> ", out$name, "<br/>",
+      "<b>", i18n("recovery_details", lang()), ":</b> ", out$recovery_details, "<br/>",
+      "<b>", i18n("ringing_date", lang()), ":</b> ", out$ringing_date, "<br/>",
+      " (", out$ringing_majorregion, ", ", out$ringing_minorregion, ")", "<br/>",
+      "<b>", i18n("recovery_date", lang()), ":</b> ", out$recovery_date, "<br/>",
+      " (", out$recovery_majorregion, ", ", out$recovery_minorregion, ")", "<br/>",
+      "<br/>"
+      )
+
+    map <-
+    	leaflet(data = out) %>%
+      addProviderTiles("OpenStreetMap.BlackAndWhite", group = "Gray") %>%
+#      addProviderTiles("Stamen.TonerLite", group = "Black & White") %>%
+      #  addMarkers(~longitude, ~latitude, popup = ~as.character(dgr), group = "Individual") %>%
+      addMarkers(~recovery_lon, ~recovery_lat, popup = popup_content,
+                 clusterOptions = markerClusterOptions(), group = "Clustered") #%>%
+#      addLayersControl(
+#        baseGroups = c("Gray", "Black & White"),
+        #    overlayGroups = c("Individual", "Clustered"),
+#        options = layersControlOptions(collapsed = FALSE)
+#      )
+
+		#map$height <- "100%"
+		#map$sizingPolicy$defaultHeight <- "100%"
+		#message(str(map))
+		map
+  })
 
   output$table <- DT::renderDataTable({
-    df()
-  }, options = list(lengthChange = FALSE, rownames = FALSE))
+    out <- df()
+    headings <- purrr::map_chr(names(out),
+	 		function(x) i18n(x, lang()))
+    names(out) <- headings
+    out
+  }, options = list(pageLength = 5, lengthChange = FALSE, rownames = FALSE))
 
   output$dl <- downloadHandler("birdrecoveries.csv",
     contentType = "text/csv", content = function(file) {
-    write.csv(birdrecoveries, file, row.names = FALSE)
+    write.csv(df(), file, row.names = FALSE)
   })
 
+  output$mytabs <- renderUI({
+  	myTabs <- list(
+	  	tabPanel(title = i18n("ui_tab_map_label", lang()),
+				helpText(i18n("ui_tab_map_help", lang())),
+				br(),
+				leafletOutput("birdmap")
+				#leafletOutput("birdmap", width = "100%", height = "100%")
+	  	),
+	  	tabPanel(i18n("ui_tab_table_label", lang()),
+				helpText(i18n("ui_tab_table_help", lang())),
+				br(),
+				dataTableOutput("table")
+	  	),
+	  	tabPanel(i18n("ui_tab_download_label", lang()),
+				helpText(i18n("ui_tab_download_help", lang())),
+				fluidRow(p(class = "text-center",
+					downloadButton("dl", label = i18n("ui_tab_download_help", lang())))
+				)
+	  	)
+  	)
+  	do.call(tabsetPanel, myTabs)
+  })
 })

@@ -3,49 +3,50 @@
 \docType{data}
 \name{birdrecoveries_swe}
 \alias{birdrecoveries_swe}
-\title{Dataset birdrecoveries in Swedish}
-\format{A data frame [3795 x 30]
+\title{Dataset birdrecoveries_swe}
+\format{A data frame [166262 x 31]
 \describe{
-  \item{name}{}
-  \item{sciname}{}
-  \item{ringing_sex_code}{}
-  \item{ringing_sex}{}
-  \item{ringing_age_code}{}
-  \item{ringing_age}{}
-  \item{ringing_date}{}
-  \item{ringing_lat}{}
-  \item{ringing_lon}{}
-  \item{ringing_country}{}
-  \item{ringing_province}{}
-  \item{ringing_majorregion}{}
-  \item{ringing_minorregion}{}
-  \item{ringing_accu2}{}
-  \item{recovery_date}{}
-  \item{recovery_accu_code}{}
-  \item{recovery_accu}{}
-  \item{recovery_lat}{}
-  \item{recovery_lon}{}
-  \item{recovery_accu2}{}
-  \item{recovery_country}{}
-  \item{recovery_province}{}
-  \item{recovery_majorregion}{}
-  \item{recovery_minorregion}{}
-  \item{distance}{}
-  \item{direction}{}
-  \item{days}{}
-  \item{hours}{}
-  \item{recovery_code}{}
-  \item{recovery_det}{}
+  \item{name}{Art}
+  \item{sciname}{Binomen}
+  \item{ringing_sex_code}{Könskod}
+  \item{ringing_sex}{Kön}
+  \item{ringing_age_code}{Ålderskod}
+  \item{ringing_age}{Ålder}
+  \item{ringing_date}{Märkdatum}
+  \item{ringing_lat}{Märklatitud}
+  \item{ringing_lon}{Märklongitud}
+  \item{ringing_country}{Märkland}
+  \item{ringing_province}{Märkprovins}
+  \item{ringing_majorregion}{Märkningens Storregion}
+  \item{ringing_minorregion}{Märkningens Småregion}
+  \item{recovery_type}{Fyndets typ}
+  \item{recovery_date}{Fyndets datum}
+  \item{recovery_date_accu_code}{Fynddatumets nogrannhetskod}
+  \item{recovery_date_accu}{Fynddatumets noggrannhet}
+  \item{recovery_lat}{Fyndets latitud}
+  \item{recovery_lon}{Fyndets longitud}
+  \item{recovery_coord_accu}{Fyndkoordinatens noggrannhet}
+  \item{recovery_country}{Fyndland}
+  \item{recovery_province}{Fyndprovins}
+  \item{recovery_majorregion}{Fyndets storregion}
+  \item{recovery_minorregion}{Fyndets småregion}
+  \item{distance}{Avstånd}
+  \item{direction}{Riktning}
+  \item{days}{Dagar sedan märkning}
+  \item{hours}{Timmar}
+  \item{recovery_code}{Fyndkod}
+  \item{recovery_details}{Fynddetaljer}
+  \item{source}{Källa}
   ...
   }}
 \source{
-\url{http://}
+\url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
 }
 \usage{
 birdrecoveries_swe
 }
 \description{
-Date: Sun Nov 13 13:40:17 2016
+Date: Mon Nov 21 10:16:48 2016
 }
 \keyword{datasets}
 

@@ -22,32 +22,6 @@ library(tools)
 tools::checkRdaFiles("data")
 tools::resaveRdaFiles("data")
 
-gen_dox_dataset_rows <- function(df) {
-  cols <- names(df)
-  template <- "#'   \\item{__COL__}{}"
-  res <- sapply(cols, function(x) gsub("__COL__", x, template))
-  out <- paste0(collapse = "\n", res)
-  message("Paste this into your dataset dox")
-  message("in R/refdata.r")
-  header <- paste0(sep = "\n", "#' Dataset ", deparse(substitute(df)), "\n",
-    "#'\n#' Date: ", date(), "\n",
-    paste0("#' @format A data frame [", nrow(df), " x ", ncol(df), "]", "\n"),
-    "#' \\describe{  ")
-  footer <- paste0("#'   ... \n#'   }\n#' @source \\url{http://}\n\"",
-                   deparse(substitute(df)), "\"")
-  message(header)
-  message(out)
-  message(footer)
-}
-
-gen_dox_dataset_rows(birdrecoveries)
-use_data(internal = FALSE, birdrecoveries, overwrite = TRUE)
-
-gen_dox_dataset_rows(birdrecoveries_eng)
-use_data(internal = FALSE, birdrecoveries_eng, overwrite = TRUE)
-
-gen_dox_dataset_rows(birdrecoveries_swe)
-use_data(internal = FALSE, birdrecoveries_swe, overwrite = TRUE)
 
 
 
