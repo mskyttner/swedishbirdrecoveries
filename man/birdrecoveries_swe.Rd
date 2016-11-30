@@ -17,8 +17,8 @@
   \item{ringing_lon}{Märklongitud}
   \item{ringing_country}{Märkland}
   \item{ringing_province}{Märkprovins}
-  \item{ringing_majorregion}{Märkningens Storregion}
-  \item{ringing_minorregion}{Märkningens Småregion}
+  \item{ringing_majorplace}{Märkningens Plats (Ungefärlig)}
+  \item{ringing_minorplace}{Märkningens Plats (Precis)}
   \item{recovery_type}{Fyndets typ}
   \item{recovery_date}{Fyndets datum}
   \item{recovery_date_accu_code}{Fynddatumets nogrannhetskod}
@@ -28,10 +28,10 @@
   \item{recovery_coord_accu}{Fyndkoordinatens noggrannhet}
   \item{recovery_country}{Fyndland}
   \item{recovery_province}{Fyndprovins}
-  \item{recovery_majorregion}{Fyndets storregion}
-  \item{recovery_minorregion}{Fyndets småregion}
-  \item{distance}{Avstånd}
-  \item{direction}{Riktning}
+  \item{recovery_majorplace}{Fyndets Plats (Ungefärlig)}
+  \item{recovery_minorplace}{Fyndets Plats (Precis)}
+  \item{distance}{Avstånd (km)}
+  \item{direction}{Riktning (grader)}
   \item{days}{Dagar sedan märkning}
   \item{hours}{Timmar}
   \item{recovery_code}{Fyndkod}
@@ -46,7 +46,7 @@
 birdrecoveries_swe
 }
 \description{
-Date: Mon Nov 21 10:16:48 2016
+Date: 2016-11-30
 }
 \keyword{datasets}
 

@@ -1,6 +1,8 @@
 #' Dataset birdrecoveries_eng
 #'
-#' Date: Mon Nov 21 10:18:08 2016
+#' Dataset birdrecoveries_eng
+#'
+#' Date: 2016-11-30
 #' @format A data frame [166262 x 31]
 #' \describe{
 #'   \item{name}{Vernacular}
@@ -14,8 +16,8 @@
 #'   \item{ringing_lon}{Ringing Longitude}
 #'   \item{ringing_country}{Ringing Country}
 #'   \item{ringing_province}{Ringing Province}
-#'   \item{ringing_majorregion}{Ringing Major Region}
-#'   \item{ringing_minorregion}{Ringing Minor Region}
+#'   \item{ringing_majorplace}{Ringing Location (Approx)}
+#'   \item{ringing_minorplace}{Ringing Location (Precise)}
 #'   \item{recovery_type}{Recovery Type}
 #'   \item{recovery_date}{Recovery Date}
 #'   \item{recovery_date_accu_code}{Recovery Date Accuracy Code}
@@ -25,23 +27,23 @@
 #'   \item{recovery_coord_accu}{Recovery Location Accuracy}
 #'   \item{recovery_country}{Recovery Country}
 #'   \item{recovery_province}{Recovery Province}
-#'   \item{recovery_majorregion}{Recovery Major Region}
-#'   \item{recovery_minorregion}{Recovery Minor Region}
-#'   \item{distance}{Distance}
-#'   \item{direction}{Direction}
+#'   \item{recovery_majorplace}{Recovery Location (Approx)}
+#'   \item{recovery_minorplace}{Recovery Location (Precise)}
+#'   \item{distance}{Distance (km)}
+#'   \item{direction}{Direction (degrees)}
 #'   \item{days}{Days Since Ringing}
 #'   \item{hours}{Hours}
 #'   \item{recovery_code}{Recovery Code}
 #'   \item{recovery_details}{Recovery Details}
 #'   \item{source}{Source}
 #'   ...
-#'   }
+#' }
 #' @source \url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
 "birdrecoveries_eng"
 
 #' Dataset birdrecoveries_swe
 #'
-#' Date: Mon Nov 21 10:16:48 2016
+#' Date: 2016-11-30
 #' @format A data frame [166262 x 31]
 #' \describe{
 #'   \item{name}{Art}
@@ -55,8 +57,8 @@
 #'   \item{ringing_lon}{Märklongitud}
 #'   \item{ringing_country}{Märkland}
 #'   \item{ringing_province}{Märkprovins}
-#'   \item{ringing_majorregion}{Märkningens Storregion}
-#'   \item{ringing_minorregion}{Märkningens Småregion}
+#'   \item{ringing_majorplace}{Märkningens Plats (Ungefärlig)}
+#'   \item{ringing_minorplace}{Märkningens Plats (Precis)}
 #'   \item{recovery_type}{Fyndets typ}
 #'   \item{recovery_date}{Fyndets datum}
 #'   \item{recovery_date_accu_code}{Fynddatumets nogrannhetskod}
@@ -66,10 +68,10 @@
 #'   \item{recovery_coord_accu}{Fyndkoordinatens noggrannhet}
 #'   \item{recovery_country}{Fyndland}
 #'   \item{recovery_province}{Fyndprovins}
-#'   \item{recovery_majorregion}{Fyndets storregion}
-#'   \item{recovery_minorregion}{Fyndets småregion}
-#'   \item{distance}{Avstånd}
-#'   \item{direction}{Riktning}
+#'   \item{recovery_majorplace}{Fyndets Plats (Ungefärlig)}
+#'   \item{recovery_minorplace}{Fyndets Plats (Precis)}
+#'   \item{distance}{Avstånd (km)}
+#'   \item{direction}{Riktning (grader)}
 #'   \item{days}{Dagar sedan märkning}
 #'   \item{hours}{Timmar}
 #'   \item{recovery_code}{Fyndkod}

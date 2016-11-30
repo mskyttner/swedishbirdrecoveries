@@ -1,3 +1,5 @@
+library(lubridate)
+
 shinyServer(function(input, output) {
 
   #sex <- birds %>% distinct(ringing_sex) %>% .$ringing_sex
@@ -20,6 +22,13 @@ shinyServer(function(input, output) {
                           recovery_lon <= input$lons[2])
     if (length(input$country) > 0)
       df <- df %>% filter(recovery_country %in% input$country)
+
+    if (length(input$months) > 0)
+    	df <- df %>% filter(month.name[month(recovery_date)] %in% input$months)
+
+    if (length(input$years) > 0)
+    	df <- df %>% filter(year(recovery_date) %in% input$years)
+
     return (df %>% head(4000))
   })
 
@@ -71,6 +80,18 @@ shinyServer(function(input, output) {
 
   })
 
+  output$months <- renderUI({
+  	selectizeInput("months", label = i18n("ui_recovery_month", lang()),
+  		choices = month.name, multiple = TRUE,
+  		options = list(maxItems = 20))
+  })
+	output$years <- renderUI({
+		y <- sort(unique(year(birdrecoveries_eng$recovery_date)))
+		selectizeInput("years", label = i18n("ui_recovery_year", lang()),
+			choices = y, multiple = TRUE,
+			options = list(maxItems = 20))
+	})
+
   output$lats <- renderUI({
     lat_min <- cmin(birds()$recovery_lat)
     lat_max <- cmax(birds()$recovery_lat)
@@ -92,9 +113,9 @@ shinyServer(function(input, output) {
       "<b>", i18n("name", lang()), ":</b> ", out$name, "<br/>",
       "<b>", i18n("recovery_details", lang()), ":</b> ", out$recovery_details, "<br/>",
       "<b>", i18n("ringing_date", lang()), ":</b> ", out$ringing_date, "<br/>",
-      " (", out$ringing_majorregion, ", ", out$ringing_minorregion, ")", "<br/>",
+      " (", out$ringing_majorplace, ", ", out$ringing_minorplace, ")", "<br/>",
       "<b>", i18n("recovery_date", lang()), ":</b> ", out$recovery_date, "<br/>",
-      " (", out$recovery_majorregion, ", ", out$recovery_minorregion, ")", "<br/>",
+      " (", out$recovery_majorplace, ", ", out$recovery_minorplace, ")", "<br/>",
       "<br/>"
       )
 

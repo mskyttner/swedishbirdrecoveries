@@ -10,8 +10,8 @@ ringing_lat,Märklatitud,Ringing Latitude
 ringing_lon,Märklongitud,Ringing Longitude
 ringing_country,Märkland,Ringing Country
 ringing_province,Märkprovins,Ringing Province
-ringing_majorregion,Märkningens Storregion,Ringing Major Region
-ringing_minorregion,Märkningens Småregion,Ringing Minor Region
+ringing_majorplace,Märkningens Plats (Ungefärlig),Ringing Location (Approx)
+ringing_minorplace,Märkningens Plats (Precis),Ringing Location (Precise)
 recovery_type,Fyndets typ,Recovery Type
 recovery_date,Fyndets datum,Recovery Date
 recovery_date_accu_code,Fynddatumets nogrannhetskod,Recovery Date Accuracy Code
@@ -21,10 +21,10 @@ recovery_lon,Fyndets longitud,Recovery Longitude
 recovery_coord_accu,Fyndkoordinatens noggrannhet,Recovery Location Accuracy
 recovery_country,Fyndland,Recovery Country
 recovery_province,Fyndprovins,Recovery Province
-recovery_majorregion,Fyndets storregion,Recovery Major Region
-recovery_minorregion,Fyndets småregion,Recovery Minor Region
-distance,Avstånd,Distance
-direction,Riktning,Direction
+recovery_majorplace,Fyndets Plats (Ungefärlig),Recovery Location (Approx)
+recovery_minorplace,Fyndets Plats (Precis),Recovery Location (Precise)
+distance,Avstånd (km),Distance (km)
+direction,Riktning (grader),Direction (degrees)
 days,Dagar sedan märkning,Days Since Ringing
 hours,Timmar,Hours
 recovery_code,Fyndkod,Recovery Code
@@ -37,3 +37,5 @@ ui_tab_table_help,Nuvarande urval (max 4000 träffar),Current selection (max 400
 ui_tab_download_label,Källdata,Source Data
 ui_tab_download_help,Ladda ned data I textformat (CSV),Download data in text format (CSV)
 ui_tab_download_button,Hämta data,Download
+ui_recovery_month,Fyndets Månad(er), Recovery Month(s)
+ui_recovery_year,Fyndets År, Recovery Year(s)

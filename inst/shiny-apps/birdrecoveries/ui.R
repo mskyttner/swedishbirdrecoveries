@@ -9,15 +9,20 @@ shinyUI(fluidPage(
   tags$style(type = "text/css", "#map {height: calc(100vh - 80px) !important;}"),
   sidebarLayout(
     sidebarPanel(
-    	img(src = "nrm-logo.png", width = 50),
-    	img(src = "logo.png", width = 50),
-      hr(),
+    	img(src = "logo.png", height = 50),
+    	img(src = "nrm-logo.png", height = 50),
+    	img(src = "birds.jpg", height = 50),
+    	hr(),
       uiOutput("species"),
       uiOutput("country"),
       uiOutput("lats"),
       uiOutput("lons"),
       uiOutput("source"),
-      uiOutput("lang")
+    	flowLayout(
+    		uiOutput("months"),
+    		uiOutput("years")
+    	),
+    	uiOutput("lang")
     ),
 
     mainPanel(

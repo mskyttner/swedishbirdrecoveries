@@ -27,13 +27,13 @@ ringing_age_code, ringing_age_swe, ringing_age_eng,
 ringing_date, ringing_lat, ringing_lon,
 ringing_country_swe, ringing_country_eng,
 ringing_province_swe, ringing_province_eng,
-ringing_majorregion, ringing_minorregion,
+ringing_majorplace, ringing_minorplace,
 recovery_type, recovery_date, recovery_date_accu_code,
 recovery_date_accu_swe, recovery_date_accu_eng,
 recovery_lat, recovery_lon, recovery_coord_accu,
 recovery_country_swe, recovery_country_eng,
 recovery_province_swe, recovery_province_eng,
-recovery_majorregion, recovery_minorregion,
+recovery_majorplace, recovery_minorplace,
 distance, direction, days, hours,
 recovery_code, recovery_details_swe, recovery_details_eng,
 source"
@@ -70,9 +70,13 @@ translation <- function(csv = "data-raw/translation.csv") {
 
 translation <- translation()
 
-if (!dplyr::setequal(translation$colname, names(birdrecoveries_eng)))
+translation_colnames <- grep("ui_", translation$colname, fixed = TRUE, invert = TRUE, value = TRUE)
+if (!dplyr::setequal(translation_colnames, names(birdrecoveries_eng))) {
 	warning("Missing translations in data-raw/translation.csv! Pls fix!")
-grep("eng", deparse(substitute(birdrecoveries_eng)))
+	dplyr::setdiff(translation_colnames, names(birdrecoveries_eng))
+}
+
+#grep("eng", deparse(substitute(birdrecoveries_eng)))
 
 gen_dox_dataset_rows <- function(df, desc) {
   fields <- names(df)
@@ -86,7 +90,7 @@ gen_dox_dataset_rows <- function(df, desc) {
   message("Paste this into your dataset dox")
   message("in R/refdata.r")
   header <- paste0(sep = "\n", "#' Dataset ", deparse(substitute(df)), "\n",
-    "#'\n#' Date: ", date(), "\n",
+    "#'\n#' Date: ", Sys.Date(), "\n",
     paste0("#' @format A data frame [", nrow(df), " x ", ncol(df), "]", "\n"),
     "#' \\describe{  ")
   footer <- paste0("#'   ... \n#'   }\n#' @source \\url{http://}\n\"",
@@ -137,17 +141,21 @@ use_data(internal = FALSE, birdrecoveries_swe, overwrite = TRUE)
 
 # locations
 
+library(dplyr)
+library(swedishbirdrecoveries)
 birds <- tbl_df(birdrecoveries_eng)
 
 orig <- birds  %>%
   select(lon = ringing_lon, lat = ringing_lat,
          ringing_country, ringing_province,
-         ringing_majorregion, ringing_minorregion)
+         ringing_majorregion, ringing_minorregion) %>%
+	filter(!is.na(lat) & !is.na(lon))
 
 dest <- birds  %>%
   select(lon = recovery_lon, lat = recovery_lat,
          recovery_country, recovery_province,
-         recovery_majorregion, recovery_minorregion)
+         recovery_majorregion, recovery_minorregion) %>%
+	filter(!is.na(lat) & !is.na(lon))
 
 
 
@@ -157,11 +165,7 @@ datatable(birds %>% head(10))
 
 library(leaflet)
 
-df <- birds %>% head(100) %>%
-  select(latitude = ringing_lat,
-         longitude = ringing_lon)
-
-leaflet(df) %>% addTiles() %>%
+leaflet(dest %>% head(100)) %>% addTiles() %>%
   addCircleMarkers(
     radius = 4,
     stroke = TRUE, fillOpacity = 0.4
