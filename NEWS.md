@@ -14,3 +14,8 @@
 * Added search on months and years in shiny app
 * Added data-raw transformation script based on public dataset at https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx
 * Rewrote vignette and updated docs
+
+# swedishbirdrecoveries 0.1.3
+
+* Simplified UI
+* Enable deployment as root context shiny app using Docker image extending the official r-base:latest in "sbr-docker" project, using something like the following command to deploy to shiny in root context: "cd /srv/shiny-server && ln -s /usr/local/lib/R/site-library/swedishbirdrecoveries/shiny-apps/birdrecoveries/* ."

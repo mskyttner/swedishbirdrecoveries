@@ -148,13 +148,13 @@ birds <- tbl_df(birdrecoveries_eng)
 orig <- birds  %>%
   select(lon = ringing_lon, lat = ringing_lat,
          ringing_country, ringing_province,
-         ringing_majorregion, ringing_minorregion) %>%
+         ringing_majorplace, ringing_minorplace) %>%
 	filter(!is.na(lat) & !is.na(lon))
 
 dest <- birds  %>%
   select(lon = recovery_lon, lat = recovery_lat,
          recovery_country, recovery_province,
-         recovery_majorregion, recovery_minorregion) %>%
+         recovery_majorplace, recovery_minorplace) %>%
 	filter(!is.na(lat) & !is.na(lon))
 
 
@@ -192,8 +192,11 @@ library(purrr)
 library(sp)
 library(mapview)
 
-linez <- make_lines(orig, dest)
-slndf <- SpatialLinesDataFrame(linez, match.ID = FALSE, data = as.data.frame(dest))
+o <- orig %>% head(4000)
+d <- dest %>% head(4000)
+
+linez <- make_lines(o, d)
+slndf <- SpatialLinesDataFrame(linez, match.ID = FALSE, data = as.data.frame(d))
 
 ## display data
 #mapview(slndf, zcol = "group", color = slndf@data$col)

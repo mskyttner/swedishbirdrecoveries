@@ -1,4 +1,7 @@
 library(lubridate)
+# deploy to shiny in root context
+#ln -s /usr/local/lib/R/site-library/swedishbirdrecoveries/shiny-apps/birdrecoveries/* .
+library(swedishbirdrecoveries)
 
 shinyServer(function(input, output) {
 
@@ -158,18 +161,18 @@ shinyServer(function(input, output) {
 				br(),
 				leafletOutput("birdmap")
 				#leafletOutput("birdmap", width = "100%", height = "100%")
-	  	),
-	  	tabPanel(i18n("ui_tab_table_label", lang()),
-				helpText(i18n("ui_tab_table_help", lang())),
-				br(),
-				dataTableOutput("table")
-	  	),
-	  	tabPanel(i18n("ui_tab_download_label", lang()),
-				helpText(i18n("ui_tab_download_help", lang())),
-				fluidRow(p(class = "text-center",
-					downloadButton("dl", label = i18n("ui_tab_download_help", lang())))
-				)
-	  	)
+	  	)  #,
+	#   	tabPanel(i18n("ui_tab_table_label", lang()),
+	# 			helpText(i18n("ui_tab_table_help", lang())),
+	# 			br(),
+	# 			dataTableOutput("table")
+	#   	),
+	#   	tabPanel(i18n("ui_tab_download_label", lang()),
+	# 			helpText(i18n("ui_tab_download_help", lang())),
+	# 			fluidRow(p(class = "text-center",
+	# 				downloadButton("dl", label = i18n("ui_tab_download_help", lang())))
+	# 			)
+	#   	)
   	)
   	do.call(tabsetPanel, myTabs)
   })
