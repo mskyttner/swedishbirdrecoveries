@@ -32,7 +32,19 @@ shinyServer(function(input, output) {
     if (length(input$years) > 0)
     	df <- df %>% filter(year(recovery_date) %in% input$years)
 
-    return (df %>% head(4000))
+    hits <- nrow(df)
+    status_swe <- paste0("Nuvarande urval ", hits,
+			" (visar max 4000 av de senaste återfynden)")
+    status_eng <- paste0("Current selection ", hits,
+			" (displaying max 4000 of the most recent recoveries)")
+    status <- status_eng
+    if (lang() == "swe") status <- status_swe
+
+    df <- df %>% arrange(desc(recovery_date)) %>% head(4000)
+    res <- list(status = status, df = df)
+
+#    res <- list(df = df)
+    return (res)
   })
 
   lang <- reactive({
@@ -49,16 +61,19 @@ shinyServer(function(input, output) {
 
   output$lang <- renderUI({
   	radioButtons(inputId = "lang", inline = TRUE,
-		 label = "",
+		 label = NULL,
 		 choices = c("English", "Svenska"), selected = "English")
   })
 
   output$species <- renderUI({
-    species <- birds() %>% distinct(name) %>% .$name
+    species <- birds() %>% distinct(name) %>% arrange(name) %>% .$name
     sciname <- birds() %>% distinct(sciname) %>% .$sciname
     if (is.null(species)) return()
+    default_species <-
+    	birds() %>% filter(sciname == "Erithacus rubecula") %>%
+    	select(name) %>% distinct %>% .$name
     selectizeInput("species", label = i18n("name", lang()),
-      choices = species, selected = species[1],
+      choices = species, selected = default_species,
       multiple = TRUE,
       options = list(maxItems = 20)#,
     )
@@ -89,7 +104,7 @@ shinyServer(function(input, output) {
   		options = list(maxItems = 20))
   })
 	output$years <- renderUI({
-		y <- sort(unique(year(birdrecoveries_eng$recovery_date)))
+		y <- sort(unique(year(birdrecoveries_eng$recovery_date)), decreasing = TRUE)
 		selectizeInput("years", label = i18n("ui_recovery_year", lang()),
 			choices = y, multiple = TRUE,
 			options = list(maxItems = 20))
@@ -110,7 +125,7 @@ shinyServer(function(input, output) {
   })
 
   output$birdmap <- renderLeaflet({
-    out <- df()
+    out <- df()$df
     popup_content <- #htmltools::htmlEscape(
       paste(sep = "",
       "<b>", i18n("name", lang()), ":</b> ", out$name, "<br/>",
@@ -142,7 +157,7 @@ shinyServer(function(input, output) {
   })
 
   output$table <- DT::renderDataTable({
-    out <- df()
+    out <- df()$df
     headings <- purrr::map_chr(names(out),
 	 		function(x) i18n(x, lang()))
     names(out) <- headings
@@ -151,16 +166,17 @@ shinyServer(function(input, output) {
 
   output$dl <- downloadHandler("birdrecoveries.csv",
     contentType = "text/csv", content = function(file) {
-    write.csv(df(), file, row.names = FALSE)
+    write.csv(df()$df, file, row.names = FALSE)
   })
 
   output$mytabs <- renderUI({
   	myTabs <- list(
 	  	tabPanel(title = i18n("ui_tab_map_label", lang()),
-				helpText(i18n("ui_tab_map_help", lang())),
+#				helpText(i18n("ui_tab_map_help", lang())),
+				helpText(df()$status),
 				br(),
-				leafletOutput("birdmap")
-				#leafletOutput("birdmap", width = "100%", height = "100%")
+				#leafletOutput("birdmap")
+				leafletOutput("birdmap", width = "100%", height = "100%")
 	  	)  #,
 	#   	tabPanel(i18n("ui_tab_table_label", lang()),
 	# 			helpText(i18n("ui_tab_table_help", lang())),

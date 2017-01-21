@@ -1,7 +1,7 @@
 Package: swedishbirdrecoveries
 Type: Package
 Title: Swedish Bird Recoveries (Data and User Interface)
-Version: 0.1.3
+Version: 0.1.4
 Author: Markus Skyttner <markus.skyttner@nrm.se>
 Maintainer: Markus Skyttner <markus.skyttner@nrm.se>
 Authors@R: person("Markus", "Skyttner", role = c("cre", "aut"), email = "markus.skyttner@nrm.se")
@@ -25,6 +25,7 @@ Imports:
     tidyr (>= 0.4.1),
     shiny (>= 0.13.0),
     shinythemes (>= 1.0.1),
+    shinydashboard (>= 0.5.3),
     ggplot2 (>= 2.0.0),
     ggthemes (>= 3.0.1),
     DT (>= 0.1),

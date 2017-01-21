@@ -19,3 +19,8 @@
 
 * Simplified UI
 * Enable deployment as root context shiny app using Docker image extending the official r-base:latest in "sbr-docker" project, using something like the following command to deploy to shiny in root context: "cd /srv/shiny-server && ln -s /usr/local/lib/R/site-library/swedishbirdrecoveries/shiny-apps/birdrecoveries/* ."
+* To deploy, in the mirroreum project, build the "raquamaps/shiny:v0" image using the Makefile target "build-shiny" then release with "docker login && docker push raquamaps/shiny:v0"
+
+# swedishbirdrecoveries 0.1.4
+
+* Using shinydashboards in the UI
