@@ -4,7 +4,7 @@
 \name{birdrecoveries_i18n}
 \alias{birdrecoveries_i18n}
 \title{Dataset birdrecoveries_i18n}
-\format{A data frame [31 x 3]
+\format{A data frame
 \describe{
   \item{colname}{Field}
   \item{desc_swe}{Translation in Swedish}
@@ -18,7 +18,6 @@
 birdrecoveries_i18n
 }
 \description{
-Date: Sat Nov 19 14:48:19 2016
+Date: 2017-06-24
 }
 \keyword{datasets}
-

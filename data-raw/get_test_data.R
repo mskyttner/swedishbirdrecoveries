@@ -5,14 +5,37 @@ library(devtools)
 
 # Use Internet Archive or Fagel3?
 
-PUB_URL <- paste0("https://archive.org/download/",
-	"swedishbirdrecoveries/recoveries.xlsx")
+# PUB_URL <- paste0("https://archive.org/download/",
+# 	"swedishbirdrecoveries/recoveries.xlsx")
+#
+# download.file(PUB_URL, destfile = "/tmp/recoveries.xlsx")
+#
+# duration <- system.time(
+# 	birdrecoveries <- readxl::read_excel("/tmp/recoveries.xlsx")
+# )
 
-download.file(PUB_URL, destfile = "/tmp/recoveries.xlsx")
+
+# Use Fagel3
+
+PUB_URL <- "http://fagel3.nrm.se/fagel/aterfynd/SQLDataExport.csv"
+DEST <- "/tmp/recoveries.csv"
+
+download.file(PUB_URL, destfile = DEST)
 
 duration <- system.time(
-	birdrecoveries <- readxl::read_excel("/tmp/recoveries.xlsx")
+	# need to skip first row, it says #TYPE System.Data.DataRow
+	birdrecoveries <-
+#		read_csv(DEST, skip = 1)
+		read_csv(DEST, skip = 1, quote = "\"",
+			locale = locale(decimal_mark = ","),
+			col_types = "cccccccccDddcccccccDcccddccccccciiiiicccD")
 )
+
+# what does FKD with value "-REL" mean?
+View(birdrecoveries %>% slice(c(16487, 16488, 87761, 87762)))
+
+tmp <- birdrecoveries %>% arrange(desc(IDat)) %>% head(10)
+View(tmp)
 
 message("Loaded data in ", duration[3], " s")
 message("Columns are: ", paste(names(birdrecoveries), " "))
@@ -36,7 +59,8 @@ recovery_province_swe, recovery_province_eng,
 recovery_majorplace, recovery_minorplace,
 distance, direction, days, hours,
 recovery_code, recovery_details_swe, recovery_details_eng,
-source"
+recovery_source,
+modified_date"
 ))
 
 names(birdrecoveries) <- new_colnames
@@ -50,12 +74,18 @@ names(eng_cols) <- eng_cols_new
 birdrecoveries_eng <-
   birdrecoveries %>%
   select(everything(), -ends_with("swe")) %>%
-  dplyr::rename_(.dots = eng_cols)
+  dplyr::rename_(.dots = eng_cols) %>%
+	filter(!is.na(ringing_lon), !is.na(ringing_lat),
+				 !is.na(recovery_lon), !is.na(recovery_lat))
+
+#View(birdrecoveries_eng)
 
 birdrecoveries_swe <-
   birdrecoveries %>%
   select(everything(), -ends_with("eng")) %>%
-  dplyr::rename_(.dots = swe_cols)
+  dplyr::rename_(.dots = swe_cols) %>%
+	filter(!is.na(ringing_lon), !is.na(ringing_lat),
+				 !is.na(recovery_lon), !is.na(recovery_lat))
 
 translation <- function(csv = "data-raw/translation.csv") {
 	if (!file.exists(csv)) {
@@ -124,15 +154,14 @@ birdrecoveries_i18n <- translation
 gen_dox_dataset_rows(birdrecoveries_i18n, meta_translation)
 devtools::use_data(internal = FALSE, birdrecoveries_i18n, overwrite = TRUE)
 
-
-# rename a column and resave
-df_tmp <- birdrecoveries_swe
-library(dplyr)
-df_tmp
-df_new <- df_tmp %>% rename(source = recovery_source)
-birdrecoveries_swe <- df_new
-library(devtools)
-use_data(internal = FALSE, birdrecoveries_swe, overwrite = TRUE)
+# # rename a column and resave
+# df_tmp <- birdrecoveries_swe
+# library(dplyr)
+# df_tmp
+# df_new <- df_tmp %>% rename(source = recovery_source)
+# birdrecoveries_swe <- df_new
+# library(devtools)
+# use_data(internal = FALSE, birdrecoveries_swe, overwrite = TRUE)
 
 
 ####################

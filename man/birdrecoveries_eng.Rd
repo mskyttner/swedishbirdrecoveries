@@ -4,7 +4,7 @@
 \name{birdrecoveries_eng}
 \alias{birdrecoveries_eng}
 \title{Dataset birdrecoveries_eng}
-\format{A data frame [166262 x 31]
+\format{A data frame
 \describe{
   \item{name}{Vernacular}
   \item{sciname}{Scientific Name}
@@ -37,19 +37,16 @@
   \item{recovery_code}{Recovery Code}
   \item{recovery_details}{Recovery Details}
   \item{source}{Source}
+  \item{modified_date}{Registration Date}
   ...
 }}
 \source{
-\url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
+\url{http://fagel3.nrm.se/fagel/aterfynd/SQLDataExport.csv}
 }
 \usage{
 birdrecoveries_eng
 }
 \description{
-Dataset birdrecoveries_eng
-}
-\details{
-Date: 2016-11-30
+Date: 2017-06-24
 }
 \keyword{datasets}
-

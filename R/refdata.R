@@ -1,9 +1,7 @@
 #' Dataset birdrecoveries_eng
 #'
-#' Dataset birdrecoveries_eng
-#'
-#' Date: 2016-11-30
-#' @format A data frame [166262 x 31]
+#' Date: 2017-06-24
+#' @format A data frame
 #' \describe{
 #'   \item{name}{Vernacular}
 #'   \item{sciname}{Scientific Name}
@@ -36,15 +34,16 @@
 #'   \item{recovery_code}{Recovery Code}
 #'   \item{recovery_details}{Recovery Details}
 #'   \item{source}{Source}
+#'   \item{modified_date}{Registration Date}
 #'   ...
 #' }
-#' @source \url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
+#' @source \url{http://fagel3.nrm.se/fagel/aterfynd/SQLDataExport.csv}
 "birdrecoveries_eng"
 
 #' Dataset birdrecoveries_swe
 #'
-#' Date: 2016-11-30
-#' @format A data frame [166262 x 31]
+#' Date: 2017-06-24
+#' @format A data frame
 #' \describe{
 #'   \item{name}{Art}
 #'   \item{sciname}{Binomen}
@@ -77,15 +76,16 @@
 #'   \item{recovery_code}{Fyndkod}
 #'   \item{recovery_details}{Fynddetaljer}
 #'   \item{source}{Källa}
+#'   \item{modified_date}{Registerdatum}
 #'   ...
 #'   }
-#' @source \url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
+#' @source \url{http://fagel3.nrm.se/fagel/aterfynd/SQLDataExport.csv}
 "birdrecoveries_swe"
 
 #' Dataset birdrecoveries_i18n
 #'
-#' Date: Sat Nov 19 14:48:19 2016
-#' @format A data frame [31 x 3]
+#' Date: 2017-06-24
+#' @format A data frame
 #' \describe{
 #'   \item{colname}{Field}
 #'   \item{desc_swe}{Translation in Swedish}

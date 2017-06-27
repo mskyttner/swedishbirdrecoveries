@@ -2,8 +2,8 @@
 % Please edit documentation in R/swedishbirdrecoveries-package.R
 \docType{package}
 \name{swedishbirdrecoveries-package}
-\alias{swedishbirdrecoveries}
 \alias{swedishbirdrecoveries-package}
+\alias{swedishbirdrecoveries}
 \title{swedishbirdrecoveries - An R package with Swedish Bird Recaptures}
 \description{
 The swedishbirdrecoveries package provides tools for working with Swedish Bird Recoveries Data in R
@@ -15,4 +15,3 @@ The data included is provided from The Swedish Natural History Museum.
 #see functions.
 }
 \keyword{package}
-

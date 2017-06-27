@@ -5,7 +5,7 @@ ringing_sex_code,Könskod,Bird Sex Code
 ringing_sex,Kön,Sex
 ringing_age_code,Ålderskod,Age Code
 ringing_age,Ålder,Age
-ringing_date,Märkdatum,Ringing Date
+ringing_date,Märkt,Ringed
 ringing_lat,Märklatitud,Ringing Latitude
 ringing_lon,Märklongitud,Ringing Longitude
 ringing_country,Märkland,Ringing Country
@@ -13,7 +13,7 @@ ringing_province,Märkprovins,Ringing Province
 ringing_majorplace,Märkningens Plats (Ungefärlig),Ringing Location (Approx)
 ringing_minorplace,Märkningens Plats (Precis),Ringing Location (Precise)
 recovery_type,Fyndets typ,Recovery Type
-recovery_date,Fyndets datum,Recovery Date
+recovery_date,Funnen,Recovered
 recovery_date_accu_code,Fynddatumets nogrannhetskod,Recovery Date Accuracy Code
 recovery_date_accu,Fynddatumets noggrannhet,Recovery Date Accuracy
 recovery_lat,Fyndets latitud,Recovery Latitude
@@ -29,7 +29,8 @@ days,Dagar sedan märkning,Days Since Ringing
 hours,Timmar,Hours
 recovery_code,Fyndkod,Recovery Code
 recovery_details,Fynddetaljer,Recovery Details
-source,Källa,Source
+recovery_source,Källa,Source
+modified_date,Registerdatum,Registration Date
 ui_tab_map_label,Karta,Map
 ui_tab_map_help,Nuvarande urval (max 4000 träffar),Current selection (max 4000 hits)
 ui_tab_table_label,Tabell,Table
@@ -37,5 +38,7 @@ ui_tab_table_help,Nuvarande urval (max 4000 träffar),Current selection (max 400
 ui_tab_download_label,Källdata,Source Data
 ui_tab_download_help,Ladda ned data I textformat (CSV),Download data in text format (CSV)
 ui_tab_download_button,Hämta data,Download
-ui_recovery_month,Fyndets Månad(er), Recovery Month(s)
-ui_recovery_year,Fyndets År, Recovery Year(s)
+ui_recovery_month,Fyndets Månad(er),Recovery Month(s)
+ui_recovery_year,Fyndets År,Recovery Year(s)
+ui_tab_about_label,Om,About
+ui_tab_about_help,Bakgrund och kontaktinformation,Background and contact details

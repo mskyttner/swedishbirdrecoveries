@@ -18,4 +18,3 @@ Retrieve bird recovery data from Norway (Stavanger)
 \examples{
 df <- scrape_recoveries_norway()
 }
-

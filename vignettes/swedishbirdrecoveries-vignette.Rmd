@@ -124,8 +124,8 @@ Matching taxonomic names may be needed in order to make reasonable efforts towar
 A package called `taxize` can be used for this purpose. Here this package is used to link out to Encyclopedia of Life pages that are available for species in the dataset.
 
 ```{r, echo=TRUE, results='asis', warning=FALSE, message=FALSE}
-library(taxize)
-library(pander)
+#library(taxize)
+#library(pander)
 
 #eubon(query = species[1], searchMode = "scientificNameExact")
 

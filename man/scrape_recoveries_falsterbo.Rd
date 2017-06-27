@@ -18,4 +18,3 @@ Retrieve bird recovery data from Falsterbo Fågelstation
 \examples{
 df <- scrape_recoveries_falsterbo()
 }
-

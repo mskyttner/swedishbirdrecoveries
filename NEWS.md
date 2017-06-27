@@ -1,3 +1,11 @@
+# swedishbirdrecoveries 0.1.5
+
+* Use shinydashboards layout with upper right corner icons with external links
+* Add back UI filters for lat, lon and time in the simplified UI
+* Add a tab with Instructions, help text and contact details and fix an issue with stylesheets from About .Rmd breaking the language switching in the Shiny app, this is related to this SO issue: https://stackoverflow.com/questions/39024390/r-shiny-includehtml-missing-htmlwidgets-in-a-reactive-context#39144014
+* Add script in inst/exec for updating datasets used in the package from remote source
+* Add popup text formatting, attempting to follow requested formatting requirements for the details to display
+
 # swedishbirdrecoveries 0.1.0
 
 * Added a `NEWS.md` file to track changes to the package.
