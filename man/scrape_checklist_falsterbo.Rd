@@ -15,4 +15,3 @@ Retrieve species list from Falsterbo Fågelstation
 \examples{
 df <- scrape_checklist_falsterbo()
 }
-

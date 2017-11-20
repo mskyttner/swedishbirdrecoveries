@@ -4,7 +4,7 @@
 \name{birdrecoveries_swe}
 \alias{birdrecoveries_swe}
 \title{Dataset birdrecoveries_swe}
-\format{A data frame [166262 x 31]
+\format{A data frame
 \describe{
   \item{name}{Art}
   \item{sciname}{Binomen}
@@ -37,16 +37,16 @@
   \item{recovery_code}{Fyndkod}
   \item{recovery_details}{Fynddetaljer}
   \item{source}{Källa}
+  \item{modified_date}{Registerdatum}
   ...
   }}
 \source{
-\url{https://archive.org/download/swedishbirdrecoveries/recoveries.xlsx}
+\url{http://fagel3.nrm.se/fagel/aterfynd/SQLDataExport.csv}
 }
 \usage{
 birdrecoveries_swe
 }
 \description{
-Date: 2016-11-30
+Date: 2017-06-24
 }
 \keyword{datasets}
-

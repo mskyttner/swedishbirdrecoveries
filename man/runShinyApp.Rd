@@ -14,4 +14,3 @@ runShinyApp(example)
 Running this function launches a Shiny web application presenting
 the datasets bundled in this package, a couple of example apps are included
 }
-

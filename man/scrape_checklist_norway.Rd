@@ -15,4 +15,3 @@ Retrieve species list from Norway, Stavanger
 \examples{
 df <- scrape_checklist_norway()
 }
-

@@ -1,0 +1,20 @@
+---
+output:
+  html_document:
+    theme: null
+    mathjax: null
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(swedishbirdrecoveries)
+timespan <- range(birdrecoveries_eng$modified_date)
+
+```
+
+![](nrm-logo.png)
+
+This is a web application for exploring Swedish Bird Recoveries, a dataset with `r nrow(birdrecoveries_eng)` records of bird recoveries made in the time period from 1911 to `r timespan[2]`.
+
+Please use the upper right corner links to learn more about the ringing of birds from Sweden and other activities at "Ringmärkningscentralen", which is hosted at the Swedish Museum for Natural History.
+

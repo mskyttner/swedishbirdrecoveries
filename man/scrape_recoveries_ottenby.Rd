@@ -15,4 +15,3 @@ Retrieve bird recovery data from Ottenby Fågelstation
 \examples{
 df <- scrape_recoveries_ottenby()
 }
-

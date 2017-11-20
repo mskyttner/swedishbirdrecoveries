@@ -41,7 +41,12 @@ An example usage follows - a clustered map shows 100 birds recoveries from Falst
 ```{r, fig.show='hold', warning=FALSE, message=FALSE, fig.width=7}
 
 library(leaflet)
+library(dplyr)
 library(swedishbirdrecoveries)
+
+data("birdrecoveries_eng")
+#data("birdrecoveries_swe")
+#data("birdrecoveries_i18n")
 
 # use just 100 or so points here
 birds <- 
@@ -124,8 +129,8 @@ Matching taxonomic names may be needed in order to make reasonable efforts towar
 A package called `taxize` can be used for this purpose. Here this package is used to link out to Encyclopedia of Life pages that are available for species in the dataset.
 
 ```{r, echo=TRUE, results='asis', warning=FALSE, message=FALSE}
-library(taxize)
-library(pander)
+#library(taxize)
+#library(pander)
 
 #eubon(query = species[1], searchMode = "scientificNameExact")
 

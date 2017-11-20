@@ -15,4 +15,3 @@ Retrieve species list from Ottenby Fågelstation
 \examples{
 df <- scrape_checklist_ottenby()
 }
-

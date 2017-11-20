@@ -12,6 +12,8 @@
 #'
 i18n <- function(field, lang = "eng") {
 
+	birdrecoveries_18n <- data("birdrecoveries_i18n")
+
 	if (missing(field) && missing(lang))
 		return (birdrecoveries_i18n$colname)
 
