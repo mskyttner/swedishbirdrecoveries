@@ -1,45 +1,48 @@
-library(readxl)
+#!/usr/bin/Rscript
+
 library(readr)
 library(dplyr)
 library(devtools)
-
-# Use Internet Archive or Fagel3?
-
-# PUB_URL <- paste0("https://archive.org/download/",
-# 	"swedishbirdrecoveries/recoveries.xlsx")
-#
-# download.file(PUB_URL, destfile = "/tmp/recoveries.xlsx")
-#
-# duration <- system.time(
-# 	birdrecoveries <- readxl::read_excel("/tmp/recoveries.xlsx")
-# )
-
-
-# Use Fagel3
+library(swedishbirdrecoveries)
 
 PUB_URL <- "http://fagel3.nrm.se/fagel/aterfynd/SQLDataExport.csv"
 DEST <- "/tmp/recoveries.csv"
+message("Downloading updated dataset from ", PUB_URL, " into ", DEST)
 
-download.file(PUB_URL, destfile = DEST)
+system.time(
+	download.file(PUB_URL, destfile = DEST)
+)
 
 duration <- system.time(
 	# need to skip first row, it says #TYPE System.Data.DataRow
-	birdrecoveries <-
+	update_df <-
 #		read_csv(DEST, skip = 1)
 		read_csv(DEST, skip = 1, quote = "\"",
 			locale = locale(decimal_mark = ","),
 			col_types = "cccccccccDddcccccccDcccddccccccciiiiicccD")
 )
 
-# what does FKD with value "-REL" mean?
-View(birdrecoveries %>% slice(c(16487, 16488, 87761, 87762)))
+# some crude validation rules
 
-tmp <- birdrecoveries %>% arrange(desc(IDat)) %>% head(10)
-View(tmp)
+if (ncol(update_df) < 41)
+	stop("Not performing update, missing cols, less than 41 cols in dataset")
+
+if (nrow(update_df) < 0.9 * nrow(swedishbirdrecoveries::birdrecoveries_eng))
+	stop("Not performing update, more than 10% of records are gone")
+
+if (range(update_df$IDat)[2] < range(swedishbirdrecoveries::birdrecoveries_eng$modified_date)[2])
+	stop("Not performing update, latest modified date lower than in package dataset")
+
+
+# what does FKD with value "-REL" mean?
+#View(birdrecoveries %>% slice(c(16487, 16488, 87761, 87762)))
+
+#tmp <- update_df %>% arrange(desc(IDat)) %>% head(10)
+#View(tmp)
 
 message("Loaded data in ", duration[3], " s")
-message("Columns are: ", paste(names(birdrecoveries), " "))
-
+message("Columns are: ", paste(names(update_df), " "))
+message("Number of records: ", nrow(update_df))
 # recovery_type (2, 3) -> ("alive", "dead")
 # what does recovery_coord_accu mean ?
 
@@ -63,7 +66,7 @@ recovery_source,
 modified_date"
 ))
 
-names(birdrecoveries) <- new_colnames
+names(update_df) <- new_colnames
 swe_cols <- select_vars(new_colnames, ends_with("_swe"))
 eng_cols <- select_vars(new_colnames, ends_with("_eng"))
 swe_cols_new <- as.vector(gsub("_swe", "", swe_cols, fixed = TRUE))
@@ -72,7 +75,7 @@ names(swe_cols) <- swe_cols_new
 names(eng_cols) <- eng_cols_new
 
 birdrecoveries_eng <-
-  birdrecoveries %>%
+  update_df %>%
   select(everything(), -ends_with("swe")) %>%
   dplyr::rename_(.dots = eng_cols) %>%
 	filter(!is.na(ringing_lon), !is.na(ringing_lat),
@@ -81,7 +84,7 @@ birdrecoveries_eng <-
 #View(birdrecoveries_eng)
 
 birdrecoveries_swe <-
-  birdrecoveries %>%
+  update_df %>%
   select(everything(), -ends_with("eng")) %>%
   dplyr::rename_(.dots = swe_cols) %>%
 	filter(!is.na(ringing_lon), !is.na(ringing_lat),
@@ -101,6 +104,7 @@ translation <- function(csv = "data-raw/translation.csv") {
 translation <- translation()
 
 translation_colnames <- grep("ui_", translation$colname, fixed = TRUE, invert = TRUE, value = TRUE)
+
 if (!dplyr::setequal(translation_colnames, names(birdrecoveries_eng))) {
 	warning("Missing translations in data-raw/translation.csv! Pls fix!")
 	dplyr::setdiff(translation_colnames, names(birdrecoveries_eng))
@@ -137,118 +141,21 @@ i18n_colnames <- function(df, translation) {
 }
 
 
+# Generate dataset documentation text
+
 gen_dox_dataset_rows(birdrecoveries_eng,
 	i18n_colnames(birdrecoveries_eng, translation)$desc_eng)
 
-devtools::use_data(internal = FALSE, birdrecoveries_eng, overwrite = TRUE)
-
 gen_dox_dataset_rows(birdrecoveries_swe,
-	i18n_colnames(birdrecoveries_swe, translation)$desc_swe)
-
-devtools::use_data(internal = FALSE, birdrecoveries_swe, overwrite = TRUE)
+										 i18n_colnames(birdrecoveries_swe, translation)$desc_swe)
 
 meta_translation <- c("Field", "Translation in Swedish",
 											"Translation in English")
-
 birdrecoveries_i18n <- translation
 gen_dox_dataset_rows(birdrecoveries_i18n, meta_translation)
-devtools::use_data(internal = FALSE, birdrecoveries_i18n, overwrite = TRUE)
 
-# # rename a column and resave
-# df_tmp <- birdrecoveries_swe
-# library(dplyr)
-# df_tmp
-# df_new <- df_tmp %>% rename(source = recovery_source)
-# birdrecoveries_swe <- df_new
-# library(devtools)
-# use_data(internal = FALSE, birdrecoveries_swe, overwrite = TRUE)
+# Install datasets in package
 
-
-####################
-
-
-
-# locations
-
-library(dplyr)
-library(swedishbirdrecoveries)
-birds <- tbl_df(birdrecoveries_eng)
-
-orig <- birds  %>%
-  select(lon = ringing_lon, lat = ringing_lat,
-         ringing_country, ringing_province,
-         ringing_majorplace, ringing_minorplace) %>%
-	filter(!is.na(lat) & !is.na(lon))
-
-dest <- birds  %>%
-  select(lon = recovery_lon, lat = recovery_lat,
-         recovery_country, recovery_province,
-         recovery_majorplace, recovery_minorplace) %>%
-	filter(!is.na(lat) & !is.na(lon))
-
-
-
-library(DT)
-datatable(birds %>% head(10))
-
-
-library(leaflet)
-
-leaflet(dest %>% head(100)) %>% addTiles() %>%
-  addCircleMarkers(
-    radius = 4,
-    stroke = TRUE, fillOpacity = 0.4
-  )
-
-make_lines <- function(orig, dest) {
-
-  lines <- map2(dest$lon, dest$lat, function(x, y)
-    sp::Line(cbind(c(orig$lon, x), c(orig$lat, y))))
-
-  ids <- paste0("a", 1:length(lines))
-
-  linez <- map2(lines, ids, function(x, y)
-    sp::Lines(slinelist = x, ID = y))
-
-  #rbind.SpatialLines(linezz, makeUniqueIDs = TRUE)
-  linezz <- sp::SpatialLines(linez, proj4string = CRS("+init=epsg:4326"))
-  return (linezz)
-}
-
-library(sp)
-library(purrr)
-
-library(sp)
-library(mapview)
-
-o <- orig %>% head(4000)
-d <- dest %>% head(4000)
-
-linez <- make_lines(o, d)
-slndf <- SpatialLinesDataFrame(linez, match.ID = FALSE, data = as.data.frame(d))
-
-## display data
-#mapview(slndf, zcol = "group", color = slndf@data$col)
-mapview(head(slndf, 100))
-
-
-
-lmap <-
-  leaflet(data = birds) %>%
-  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%
-  #  addMarkers(~lon, ~lat, popup = ~as.character(dgr)) %>%
-  addPolylines(data = head(linez, 100)) %>%
-  addCircleMarkers(data = dest,
-    radius = 2,
-    stroke = FALSE, fillOpacity = 0.5
-  )
-
-lmap
-
-#llmap <- map(lines, function(x) lmap %>% addPolylines(data = x))
-
-lmap
-
-
-
-
+devtools::use_data(birdrecoveries_eng, internal = FALSE, overwrite = TRUE)
+devtools::use_data(birdrecoveries_swe, internal = FALSE, overwrite = TRUE)
+devtools::use_data(birdrecoveries_i18n, internal = FALSE, overwrite = TRUE)
