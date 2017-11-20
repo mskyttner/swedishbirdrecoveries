@@ -23,4 +23,3 @@ Translate strings for display in user interface
 \examples{
  fields <- i18n()
 }
-
