@@ -41,7 +41,8 @@ Imports:
     rjson (>= 0.2.15),
     sp (>= 1.2-4),
     readr (>= 1.1.1),
-    tibble (>= 1.3.4)
+    tibble (>= 1.3.4),
+    DBI (>0.7)
 Suggests:
     devtools,
     testthat,
