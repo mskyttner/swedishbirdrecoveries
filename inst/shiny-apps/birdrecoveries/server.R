@@ -11,34 +11,8 @@ data("birdrecoveries_swe")
 data("birdrecoveries_i18n")
 
 #shinyServer(function(input, output) {
+
 server <- function(input, output, session) {
-
-# 	observe({
-# 		req(input$lang)
-# 		updateTabItems(session, 'menu_tabs', 'all')
-# 	})
-#
-# 	observeEvent(input$lang, {
-# 		cat("Switching language to", input$lang, "\n")
-# 		print(head(birds()))
-# #		updateTabItems(session, "menu_tabs", "about")
-# #		updateSelectizeInput(session, "species", )
-# 	})
-#
-# 	eventReactive(input$lang, {
-# 		birds()
-# 		updateTabItems(session, "menu_tabs", "all")
-# #		updateTabItems(session, "menu_tabs", "about")
-# 	})
-
-#	isolate({updateTabItems(session, "menu_tabs", "all")})
-
-	# observe({
-	# 	req(input$mydata)
-	# 	proxy <- leafletProxy("birdmap")
-	# 	message(proxy$id)
-	# 	#proxy %>% setView(runif(1) * 30 +2, runif(1) * 30 + 2, 7)
-	# })
 
   #sex <- birds %>% distinct(ringing_sex) %>% .$ringing_sex
   #age <- birds %>% distinct(ringing_age) %>% .$ringing_age
@@ -210,17 +184,35 @@ server <- function(input, output, session) {
   })
 
   output$birdmap <- renderLeaflet({
-    out <- df()$df
-    # TODO go through "out" and replace all NA with "" already here
+
+  	out <- df()$df
+
+    # attempt to do specifically requested popup detail strings formatting
+		pop <-
+			out %>%
+			select(name, recovery_details,
+				ringing_date, ringing_country,
+				ringing_province, ringing_majorplace, ringing_minorplace,
+				recovery_date, recovery_country,
+				recovery_province, recovery_majorplace, recovery_minorplace) %>%
+			mutate_all(.funs = function(x) recode(as.character(x), .missing = "")) %>%
+			mutate(ringing_loc = if_else(ringing_country == "Sverige" | ringing_country == "Sweden",
+				paste(ringing_province, ringing_majorplace, ringing_minorplace),
+				paste(ringing_country, ringing_province, ringing_majorplace, ringing_minorplace))) %>%
+			mutate(recovery_loc = if_else(recovery_country == "Sverige" | recovery_country == "Sweden",
+				paste(recovery_province, recovery_majorplace, recovery_minorplace),
+				paste(recovery_country, recovery_province, recovery_majorplace, recovery_minorplace)))
 
     popup_content <- #htmltools::htmlEscape(
       paste(sep = "",
-      "<b>", i18n("name", lang()), ":</b> ", out$name, "<br/>",
-      "<b>", i18n("recovery_details", lang()), ":</b> ", out$recovery_details, "<br/>",
-      "<b>", i18n("ringing_date", lang()), ":</b> ", out$ringing_date, "<br/>",
-      " ", out$ringing_majorplace, ", ", out$ringing_minorplace, "", "<br/>",
-      "<b>", i18n("recovery_date", lang()), ":</b> ", out$recovery_date, "<br/>",
-      " ", out$recovery_majorplace, ", ", out$recovery_minorplace, "", "<br/>",
+      "<b>", i18n("name", lang()), ":</b> ", pop$name, "<br/>",
+      "<b>", i18n("recovery_details", lang()), ":</b> ", pop$recovery_details, "<br/>",
+      "<b>", i18n("ringing_date", lang()), ":</b> ", pop$ringing_date, "<br/>",
+     # " ", pop$ringing_majorplace, ", ", pop$ringing_minorplace, "", "<br/>",
+      " ", pop$ringing_loc, "<br/>",
+      "<b>", i18n("recovery_date", lang()), ":</b> ", pop$recovery_date, "<br/>",
+#      " ", pop$recovery_majorplace, ", ", pop$recovery_minorplace, "", "<br/>",
+      " ", pop$recovery_loc, "<br/>",
       "<br/>"
       )
 
@@ -262,14 +254,6 @@ server <- function(input, output, session) {
     write.csv(df()$df, file, row.names = FALSE)
   })
 
-#   output$menu_tabs_ui <- renderMenu({
-#   	sidebarMenu(id = "menu_tabs",
-# #			menuItem("Menu1", tabName = "menu1", icon = icon("dashboard")),
-# #			menuItem("Latest", tabName = "latest", icon = icon("dashboard")),
-# 		menuItem("About", tabName = "about", icon = icon("pencil")),
-# 		menuItem("All", tabName = "all", icon = icon("dashboard"))
-#   )
-#   })
 
   output$tab_box <- renderUI({
   	fluidRow(

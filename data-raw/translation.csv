@@ -5,7 +5,7 @@ ringing_sex_code,Könskod,Bird Sex Code
 ringing_sex,Kön,Sex
 ringing_age_code,Ålderskod,Age Code
 ringing_age,Ålder,Age
-ringing_date,Märkdatum,Ringing Date
+ringing_date,Märkt,Ringed
 ringing_lat,Märklatitud,Ringing Latitude
 ringing_lon,Märklongitud,Ringing Longitude
 ringing_country,Märkland,Ringing Country
@@ -13,7 +13,7 @@ ringing_province,Märkprovins,Ringing Province
 ringing_majorplace,Märkningens Plats (Ungefärlig),Ringing Location (Approx)
 ringing_minorplace,Märkningens Plats (Precis),Ringing Location (Precise)
 recovery_type,Fyndets typ,Recovery Type
-recovery_date,Fyndets datum,Recovery Date
+recovery_date,Funnen,Recovered
 recovery_date_accu_code,Fynddatumets nogrannhetskod,Recovery Date Accuracy Code
 recovery_date_accu,Fynddatumets noggrannhet,Recovery Date Accuracy
 recovery_lat,Fyndets latitud,Recovery Latitude
