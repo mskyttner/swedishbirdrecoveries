@@ -1,3 +1,7 @@
+# swedishbirdrecoveries 0.1.7
+
+* Fix issue #18 with map tile provider, switching to other provider
+
 # swedishbirdrecoveries 0.1.6
 
 * Use "LazyData=false" and convert data to sqlite db

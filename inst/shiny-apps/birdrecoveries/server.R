@@ -218,8 +218,10 @@ server <- function(input, output, session) {
 
     map <-
     	leaflet(data = out) %>%
-      addProviderTiles("OpenStreetMap.BlackAndWhite", group = "Gray") %>%
-#      addProviderTiles("Stamen.TonerLite", group = "Black & White") %>%
+#       addProviderTiles("Stamen.TonerLite", group = "Gray") %>%
+#      addProviderTiles("Esri.WorldGrayCanvas", group = "Gray") %>%
+#      addProviderTiles("OpenStreetMap.BlackAndWhite", group = "Black & White") %>%
+    	addTiles(urlTemplate = "//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", options = tileOptions(maxZoom = 18), group = "Gray", layerId = "test") %>%
       #  addMarkers(~longitude, ~latitude, popup = ~as.character(dgr), group = "Individual") %>%
       addMarkers(~recovery_lon, ~recovery_lat, popup = popup_content,
                  clusterOptions = markerClusterOptions(), group = "Clustered") #%>%
